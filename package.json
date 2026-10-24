@@ -1,0 +1,21 @@
+{
+  "name": "argus-monorepo",
+  "private": true,
+  "packageManager": "pnpm@11.9.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "tui": "pnpm --filter @repo/tui start",
+    "eval": "pnpm --filter @repo/agent-core eval",
+    "db:push": "pnpm --filter @repo/db db:push",
+    "db:seed": "pnpm --filter @repo/db db:seed",
+    "typecheck": "turbo run typecheck",
+    "build": "turbo run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "dotenv-cli": "^8.0.0",
+    "tsx": "^4.19.3",
+    "turbo": "^2.4.0",
+    "typescript": "^5.8.2"
+  }
+}
