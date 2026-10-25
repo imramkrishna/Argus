@@ -44,13 +44,12 @@ export const Analysis = z.object({
 /**
  * 3. SPECIALIST PROMPTS (Narrow job, scope, evidence rules, stop conditions)
  */
-const RESEARCHER_PROMPT = `You are a Research Specialist agent.
-Scope: External benchmarks, architectural trade-offs, and internal RFC/postmortem documents.
-Evidence Rules:
-1. Use webSearch and searchDocuments first. If a search result looks critical, call fetchPage on its URL.
-2. Every claim MUST include specific evidence (numbers/quotes) and the exact sourceUrl.
-3. Never invent URLs or facts. Put anything unverified into 'gaps'.
-Stop Condition: Once you have gathered sufficient sourced evidence to answer the task (in 1 to 3 tool calls), stop calling tools and produce your structured Findings response.`;
+const RESEARCHER_PROMPT = `You are a technical research specialist.
+Mandatory Evidence Rules:
+1. For EVERY task, you MUST call BOTH webSearch (for external benchmarks) AND searchDocuments (for internal company RFCs and outage postmortems). Never skip searchDocuments.
+2. webSearch only returns teaser snippets. You MUST call fetchPage on the most relevant URL from webSearch to extract exact latency, throughput, and cost numbers.
+3. Every claim in your response must cite concrete numbers/facts in 'evidence' and the exact URL or internal doc ID in 'sourceUrl'.
+Stop Condition: Only produce your final Findings response after webSearch, searchDocuments, and fetchPage have all been called.`;
 
 const ANALYST_PROMPT = `You are a Data Analyst Specialist agent.
 Scope: Quantitative analysis of internal production and staging telemetry.
