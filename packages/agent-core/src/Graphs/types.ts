@@ -1,17 +1,17 @@
-import { StateSchema } from "@langchain/langgraph";
-import z from "zod";
+import { ReducedValue, StateSchema } from "@langchain/langgraph";
+import { z } from "zod/v4";
 export const subtaskSchema = z.object({
   kind: z.enum(["research", "data"]),
   task: z.string(),
 });
+export const Finding = z.object({
+  claim: z.string(),
+  evidence: z.string(),
+  sourceUrl: z.string(),
+});
+
 export const Findings = z.object({
-  findings: z.array(
-    z.object({
-      claim: z.string(),
-      evidence: z.string(),
-      sourceUrl: z.string(),
-    }),
-  ),
+  findings: z.array(Finding),
   gaps: z.array(z.string()),
 });
 export const Analysis = z.object({
@@ -39,10 +39,57 @@ export const Analysis = z.object({
 export const ResearchPlan = z.object({
   subtasks: z.array(subtaskSchema).min(2).max(4),
 });
+export const Critique = z.object({
+  verdict: z.enum(["sufficient", "gaps"]),
+  gaps: z
+    .array(
+      z.object({
+        issue: z
+          .string()
+          .describe("What is missing, contradictory, or unverified"),
+        kind: z
+          .enum(["research", "data"])
+          .describe("Which specialist should fix this gap"),
+        followUpTask: z
+          .string()
+          .describe("Specific, self-contained follow-up task"),
+      }),
+    )
+    .max(3),
+});
+export const ReportSchema = z.object({
+  recommendation: z.string().describe("Clear executive recommendation and summary"),
+  confidence: z.enum(["low", "medium", "high"]),
+  evidence: z
+    .array(
+      z.object({
+        claim: z.string(),
+        source: z.string().describe("Exact URL, internal doc ID, or telemetry metric"),
+      })
+    )
+    .min(1),
+  risks: z.array(
+    z.object({
+      risk: z.string(),
+      severity: z.enum(["low", "medium", "high"]),
+      mitigation: z.string(),
+    })
+  ),
+});
 export const RAState = new StateSchema({
   question: z.string(),
   subtasks: z.array(subtaskSchema),
-  findings: z.array(Findings),
-  analyses: z.array(Analysis),
-  report: z.string(),
+  findings: new ReducedValue(z.array(Finding).default(() => []), {
+    reducer: (current, next) => [...current, ...next],
+  }),
+  analyses: new ReducedValue(z.array(Analysis).default(() => []), {
+    reducer: (current, next) => [...current, ...next],
+  }),
+  report: ReportSchema,
+  critique:Critique,
+  criticRounds:z.number().default(0)
 });
+
+
+export type ReportType = z.infer<typeof ReportSchema>;
+
