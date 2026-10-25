@@ -1,4 +1,4 @@
-import { ChatOpenAI } from "@langchain/openai";
+import { createOpenRouterModel } from "./createModel";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import {
   fetchPage,
@@ -40,19 +40,6 @@ export const Analysis = z.object({
     .array(z.string())
     .describe("Missing telemetry or unmeasured operational scenarios"),
 });
-export function createOpenRouterModel(temperature = 0) {
-  if (!process.env.OPENROUTER_API_KEY) {
-    throw new Error("Missing OPENROUTER_API_KEY in .env file");
-  }
-  return new ChatOpenAI({
-    model: "google/gemini-2.5-flash-lite",
-    apiKey: process.env.OPENROUTER_API_KEY,
-    temperature,
-    configuration: {
-      baseURL: "https://openrouter.ai/api/v1",
-    },
-  });
-}
 
 /**
  * 3. SPECIALIST PROMPTS (Narrow job, scope, evidence rules, stop conditions)

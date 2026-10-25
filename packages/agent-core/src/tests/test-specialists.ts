@@ -1,4 +1,4 @@
-import { researcher,dataAnalyst } from "./specialist";
+import { researcher,dataAnalyst } from "../specialist";
 
 async function main() {
   console.log("=== 1. Testing Standalone Researcher Specialist ===");

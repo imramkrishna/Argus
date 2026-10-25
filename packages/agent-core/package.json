@@ -15,6 +15,7 @@
     "@langchain/openai": "^1.7.0",
     "@repo/db": "workspace:*",
     "@repo/shared": "workspace:*",
+    "langchain": "^1.5.19",
     "zod": "^3.25.76"
   }
 }
