@@ -1,4 +1,4 @@
-import { supervisor } from "./supervisor.js";
+import { supervisor } from "../agents/supervisor";
 
 const out = await supervisor.invoke({
   messages: [

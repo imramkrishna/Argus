@@ -1,8 +1,9 @@
 import { tool } from "@langchain/core/tools";
-import { researcher, dataAnalyst } from "./specialist";
+import { researcher } from "./researcher";
+import { dataAnalyst } from "./dataAnalyst";
 import z from "zod";
-import {createAgent, modelCallLimitMiddleware} from "langchain"
-import { createOpenRouterModel } from "./createModel";
+import { createAgent, modelCallLimitMiddleware } from "langchain";
+import { createOpenRouterModel } from "../createModel";
 export const delegateResearch = tool(
   async ({ task }, config) => {
     console.log(`\n🧭 [Supervisor -> Researcher] Delegating: "${task}"`);
@@ -29,7 +30,7 @@ export const delegateAnalysis = tool(
     console.log(`\n🧭 [Supervisor -> DataAnalyst] Delegating: "${task}"`);
     const out = await dataAnalyst.invoke(
       { messages: [{ role: "user", content: task }] },
-      { context: config?.context }
+      { context: config?.context },
     );
     return JSON.stringify(out.structuredResponse);
   },
@@ -38,11 +39,12 @@ export const delegateAnalysis = tool(
     description:
       "Give a focused quantitative analysis task to the data analyst specialist. Use for internal operational telemetry, RPS, latency, CPU, and costs.",
     schema: z.object({
-      task: z.string().describe("A specific, self-contained data analysis question"),
+      task: z
+        .string()
+        .describe("A specific, self-contained data analysis question"),
     }),
-  }
+  },
 );
-
 
 const SUPERVISOR_PROMPT = `You are a technical engineering supervisor.
 To answer the user's architectural question:
@@ -50,7 +52,7 @@ To answer the user's architectural question:
 2. Delegate focused, self-contained tasks using delegate_research and delegate_analysis.
 3. Check coverage of the returned findings and metrics. If critical gaps prevent a high-confidence recommendation, delegate a targeted follow-up.
 4. Synthesize a clear final recommendation backed by both external evidence URLs and internal telemetry numbers.`;
-const model=createOpenRouterModel()
+const model = createOpenRouterModel();
 export const supervisor = createAgent({
   model,
   tools: [delegateResearch, delegateAnalysis],
