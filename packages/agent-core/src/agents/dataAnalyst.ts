@@ -1,5 +1,5 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { queryDatabase,computeStats } from "./tools/dataAnalyst.tools";
+import { queryDatabase,computeStats } from "../tools/dataAnalyst.tools";
 
 const DATA_ANALYST_PROMPT = `You are an expert database and systems data analyst. Your job is to analyze internal operational telemetry and performance tables to answer quantitative engineering questions.
 Rules:

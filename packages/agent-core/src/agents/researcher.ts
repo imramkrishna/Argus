@@ -3,7 +3,7 @@ import {
   fetchPage,
   searchDocuments,
   webSearch,
-} from "./tools/researcher.tools";
+} from "../tools/researcher.tools";
 
 const RESEARCHER_PROMPT = `You are an expert technical researcher. Your job is to answer a specific, self-contained research subtask by gathering evidence from web searches and internal architecture documentation.
 Rules:
