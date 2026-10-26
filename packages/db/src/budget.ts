@@ -1,7 +1,6 @@
 import { eq, sql } from "drizzle-orm";
 import { db } from "./client";
 import { tenantBudgets } from "./schema";
-export const MONTHLY_BUDGET = 50.0;
 export async function checkTenantBudget(orgId: string) {
   const result = await db
     .select({ remaining: tenantBudgets.remainingUsd })
