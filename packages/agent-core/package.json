@@ -15,6 +15,8 @@
     "@langchain/openai": "^1.7.0",
     "@repo/db": "workspace:*",
     "@repo/shared": "workspace:*",
+    "bullmq": "^6.4.2",
+    "ioredis": "^6.0.0",
     "langchain": "^1.5.19",
     "zod": "^4.6.7"
   }
