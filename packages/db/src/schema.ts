@@ -78,6 +78,11 @@ export const usageLedger = pgTable("usage_ledger", {
   latencyMs: integer("latency_ms").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+export const tenantBudgets = pgTable("tenant_budgets", {
+  orgId: uuid("org_id").primaryKey(), // One row per tenant
+  remainingUsd: doublePrecision("remaining_usd").default(50.0).notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
 
 // 5. Operational Telemetry (For DataAnalyst queryDatabase tool)
 export const operationalTelemetry = pgTable("operational_telemetry", {
