@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.0",
+    "dotenv": "^18.0.9",
     "dotenv-cli": "^8.0.0",
     "tsx": "^4.19.3",
     "turbo": "^2.4.0",
