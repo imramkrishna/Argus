@@ -33,7 +33,7 @@ Evidence Rules:
 Stop Condition: Once you have queried the database and computed key comparisons, stop calling tools and produce your structured Analysis response.`;
 
 export const dataAnalyst = createAgent({
-  model: createOpenRouterModel(0),
+  model: createOpenRouterModel("data-analyst"),
   tools: [queryDatabase, computeStats],
   systemPrompt: ANALYST_PROMPT,
   responseFormat: Analysis,

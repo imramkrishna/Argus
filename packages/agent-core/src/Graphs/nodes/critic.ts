@@ -1,11 +1,8 @@
 import z from "zod";
-import { createOpenRouterModel } from "../../createModel";
 import { Send } from "@langchain/langgraph";
 import { Critique, RAState } from "../types";
-
-const model = createOpenRouterModel();
-
-
+import { createOpenRouterModel } from "../../createModel";
+const model = createOpenRouterModel("critic");
 
 const CRITIC_PROMPT = `You are a rigorous technical Critic. Audit the collected Research Findings and Data Analyses against the user's question:
 1. Comparison Completeness: If the question compares options (e.g., System A vs System B), did we gather metrics and research for BOTH options, or only one?

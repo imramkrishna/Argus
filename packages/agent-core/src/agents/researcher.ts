@@ -24,7 +24,7 @@ Mandatory Evidence Rules:
 Stop Condition: Only produce your final Findings response after webSearch, searchDocuments, and fetchPage have all been called.`;
 
 export const researcher = createAgent({
-  model: createOpenRouterModel(0),
+  model: createOpenRouterModel("researcher"),
   tools: [webSearch, fetchPage, searchDocuments],
   systemPrompt: RESEARCHER_PROMPT,
   responseFormat: Findings,

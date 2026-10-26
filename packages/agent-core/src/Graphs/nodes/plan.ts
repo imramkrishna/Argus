@@ -1,6 +1,6 @@
-import { createOpenRouterModel } from "../../createModel";
 import { RAState, ResearchPlan } from "../types";
-const model= createOpenRouterModel()
+import { createOpenRouterModel } from "../../createModel";
+const model = createOpenRouterModel("planner");
 export const planNode = async (s: typeof RAState.State) => {
   console.log(`\n🗺️ [Router: plan] Decomposing: "${s.question}"`);
   const p = await model

@@ -52,7 +52,7 @@ To answer the user's architectural question:
 2. Delegate focused, self-contained tasks using delegate_research and delegate_analysis.
 3. Check coverage of the returned findings and metrics. If critical gaps prevent a high-confidence recommendation, delegate a targeted follow-up.
 4. Synthesize a clear final recommendation backed by both external evidence URLs and internal telemetry numbers.`;
-const model = createOpenRouterModel();
+const model = createOpenRouterModel("supervisor");
 export const supervisor = createAgent({
   model,
   tools: [delegateResearch, delegateAnalysis],

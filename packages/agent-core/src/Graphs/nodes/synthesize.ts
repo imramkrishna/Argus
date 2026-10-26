@@ -1,6 +1,6 @@
 import { createOpenRouterModel } from "../../createModel";
 import { RAState, ReportSchema } from "../types";
-const model = createOpenRouterModel();
+const model = createOpenRouterModel("synthesizer");
 export const synthesize = async (s: typeof RAState.State) => {
   console.log(
     `\n📝 [synthesize] Generating structured Report from ${s.findings.length} findings & ${s.analyses.length} analyses...`
@@ -16,6 +16,5 @@ Last Critique: ${JSON.stringify(s.critique)}`
   );
   return { report };
 };
-
 
 
