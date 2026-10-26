@@ -18,5 +18,3 @@ console.log("\n✅ Baseline Final Report:\n");
 console.log(
 "\n" + renderBaselineReport(out.structuredResponse),
 );
-
-
